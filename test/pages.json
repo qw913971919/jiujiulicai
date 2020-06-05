@@ -1,0 +1,142 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/home/home",
+			"style": {
+				"navigationBarTitleText": "久久收益"
+			}
+		},
+		{
+			"path": "pages/more/more",
+			"style": {
+				"navigationBarTitleText": "更多",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/service/service",
+			"style": {
+				"navigationBarTitleText": "客服"
+			}
+		},
+		{
+			"path": "pages/user/user",
+			"style": {
+				"navigationBarTitleText": "我的",
+				"enablePullDownRefresh": true,
+				"backgroundTextStyle": "dark"
+			}
+		},
+		{
+			"path":"pages/more/information",
+			"style":{
+				"navigationBarTitleText":"账号安全"
+			}
+		},
+		{
+			"path":"pages/more/collection",
+			"style":{
+				"navigationBarTitleText":"收款账户"
+			}
+		},
+		{
+			"path":"pages/more/withdrawal",
+			"style":{
+				"navigationBarTitleText":"提现账号"
+			}
+		},
+		{
+			"path":"pages/more/form",
+			"style":{
+				"navigationBarTitleText":"盈利报表"
+			}
+		},
+		{
+			"path": "pages/notice/noticecontent",
+			"style": {
+				"navigationBarTitleText": "公告内容"
+			}
+		},
+		{
+			"path": "pages/notice/notice",
+			"style": {
+				"navigationBarTitleText": "系统公告"
+			}
+		}, 
+		{
+			"path": "pages/problem/problem",
+			"style": {
+				"navigationBarTitleText": "常见问题"
+			}
+		},
+		{
+			"path": "pages/problem/problemcontent",
+			"style": {
+				"navigationBarTitleText": " "
+			}
+		},
+		{
+			"path":"pages/recharge/recharge",
+			"style":{
+				"navigationBarTitleText":"在线充值"
+			}
+		},
+		{
+			"path":"pages/order/order",
+			"style":{
+				"navigationBarTitleText":"提交订单"
+			}
+		}
+        ,{
+            "path" : "pages/more/get",
+            "style":{
+            	"navigationBarTitleText":"修改个人信息"
+            }
+        }
+        ,{
+            "path" : "pages/more/zfbcollection",
+            "style" : {
+				"navigationBarTitleText":"我的支付宝账户"
+			}
+        }
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#566DCC",
+		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+		"color": "#7A7E83",
+		"selectedColor": "#3cc51f",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"height": "50px",
+		"fontSize": "10px",
+		"iconWidth": "24px",
+		"spacing": "3px",
+		"list": [{
+				"pagePath": "pages/home/home",
+				"iconPath": "static/image/home.png",
+				"selectedIconPath": "static/image/home.png",
+				"text": "首页"
+			}, {
+				"pagePath": "pages/user/user",
+				"iconPath": "static/image/user.png",
+				"selectedIconPath": "static/image/user.png",
+				"text": "我的"
+			},
+			{
+				"pagePath": "pages/service/service",
+				"iconPath": "static/image/service.png",
+				"selectedIconPath": "static/image/service.png",
+				"text": "客服"
+			}, {
+				"pagePath": "pages/more/more",
+				"iconPath": "static/image/more.png",
+				"selectedIconPath": "static/image/more.png",
+				"text": "更多"
+			}
+		]
+	}
+}
