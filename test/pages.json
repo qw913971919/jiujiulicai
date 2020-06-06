@@ -99,6 +99,12 @@
 				"navigationBarTitleText":"我的支付宝账户"
 			}
         }
+        ,{
+            "path" : "pages/more/bankcard",
+            "style" : {
+				"navigationBarTitleText":"添加提现银行卡"
+			}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

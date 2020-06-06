@@ -1,6 +1,6 @@
 <template>
 	<view class="content">
-		<view class="button">+</view>
+		<view class="button" @tap="chooseImage()">+</view>
 		<view v-if="flag">
 			<view v-if="userdata.alipay.enable" class="item_box" style="margin:20upx 0upx;">
 				<text style="font-weight: 550;font-size: 35upx;">启用中的账户</text>
@@ -35,7 +35,10 @@
 				</view>
 			</view>
 		</view>
-		<view v-else class="none">暂未设置支付宝收款账户</view>
+		<view v-else class="none">暂未设置支付宝收款账户
+		
+		</view>
+		<image :src="image[0]" v-if="image">{{image[0]}}</image>
 		<!-- 如果前两者都没有，后台这里还应该做下处理，显示一行提示信息，但是目前不知道后台如何处理，暂时不写 -->
 	</view>
 </template>
@@ -44,6 +47,7 @@
 	export default {
 		data() {
 			return {
+				image:[],
 				userdata: {
 					alipay:{
 						// enable: {
@@ -74,7 +78,29 @@
 			// this.flag=true;
 		},
 		methods: {
-
+		chooseImage(){
+			uni.chooseImage({
+			    count: 1, //上传图片的数量，默认是9
+			    sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+			    sourceType: ['album'], //从相册选择
+			    success: function (res) {
+			         const tempFilePaths = res.tempFilePaths;    //拿到选择的图片，是一个数组
+					// 这里已经拿到了支付宝的上传图片，使用临时图片上传至，服务器。
+					            // uni.uploadFile({
+					            //   url:'http://localhost:3000/users/upload',		//post请求的地址
+					            //   filePath:tempFilePaths[0],
+					            //   name:'avatar',	
+					            //   formData: {
+					            //     'username': this.userInfo.username  //formData是指除了图片以外，额外加的字段
+					            //   },
+					            //   success: (uploadFileRes) => {
+					            //     //这里要注意，uploadFileRes.data是个String类型，要转对象的话需要JSON.parse一下
+					            //     var obj = JSON.parse(uploadFileRes.data);
+					            //   }
+					            // })
+			    }
+			});
+		}
 		}
 	}
 </script>
