@@ -1,0 +1,128 @@
+@charset "UTF-8";
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* 颜色变量 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.content.data-v-e9fb9f98 {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  position: fixed;
+  background-color: #f0f0f0;
+}
+.content .order.data-v-e9fb9f98:last-child {
+  margin-bottom: 180rpx;
+}
+.content .tips.data-v-e9fb9f98 {
+  margin: 80rpx auto;
+  text-align: center;
+  color: #636363;
+}
+.content .order.data-v-e9fb9f98 {
+  width: 90%;
+  margin: 50rpx auto;
+  background-color: #FFFFFF;
+  border-radius: 18rpx;
+  padding: 20rpx 20rpx;
+  color: #636363;
+  border: 1rpx solid rgba(0, 0, 0, 0.2);
+}
+.content .order view.data-v-e9fb9f98:first-child {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+}
+.content .order .text.data-v-e9fb9f98 {
+  text-align: right;
+  margin: 10rpx 0;
+}
+.content .order button.data-v-e9fb9f98 {
+  width: 100%;
+}
+.content .username.data-v-e9fb9f98 {
+  background-color: #A4B1E3;
+  margin-bottom: -5rpx;
+  padding: 10rpx 20rpx;
+  text-align: center;
+}
+.content .box.data-v-e9fb9f98 {
+  background: #A4B1E3;
+  margin-top: -3rpx;
+  padding: 20rpx 10rpx;
+}
+.content .box .getmoney.data-v-e9fb9f98 {
+  background-color: #FFFFFF;
+  border: 1rpx solid rgba(0, 0, 0, 0.2);
+  margin: 20rpx 0;
+  padding: 20rpx;
+  border-radius: 10rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.content .box .getmoney .recharge.data-v-e9fb9f98 {
+  padding: 10rpx 30rpx;
+  border-radius: 30rpx;
+  background-color: #000000;
+  color: #FFFFFF;
+}
+.content .userinformation.data-v-e9fb9f98 {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: space-around;
+          justify-content: space-around;
+  text-align: center;
+  padding: 40rpx 0rpx;
+  background: #A4B1E3;
+  color: #566DCC;
+  font-size: 35rpx;
+}
+.content .userinformation .user_box.data-v-e9fb9f98 {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+}
+.content .userinformation .user_box .information.data-v-e9fb9f98 {
+  color: #000000;
+  font-weight: bold;
+  font-size: 55rpx;
+}
+.content .userinformation .user_box.data-v-e9fb9f98:first-child {
+  border-right: 1px solid #c4c4c4;
+}
+.content .userinformation .user_box.data-v-e9fb9f98:last-child {
+  border-left: 1px solid #c4c4c4;
+}
+

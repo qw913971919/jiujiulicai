@@ -28,7 +28,7 @@
 		data(){
 			return{
 				userdata:{
-					user:'Cc',
+					user:'NB0000',
 					name:'自卑',
 					qq:'913971919',
 					password:false//是否设定了支付密码

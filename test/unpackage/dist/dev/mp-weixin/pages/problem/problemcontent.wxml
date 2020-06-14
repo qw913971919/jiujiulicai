@@ -1,0 +1,1 @@
+<view class="data-v-01ebd8d6"><text class="title data-v-01ebd8d6">{{problemcontent.title}}</text><view class="content data-v-01ebd8d6">{{problemcontent.content}}</view></view>

@@ -1,0 +1,65 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/more/more",
+    "pages/service/service",
+    "pages/user/user",
+    "pages/more/information",
+    "pages/more/collection",
+    "pages/more/withdrawal",
+    "pages/more/form",
+    "pages/notice/noticecontent",
+    "pages/notice/notice",
+    "pages/problem/problem",
+    "pages/problem/problemcontent",
+    "pages/recharge/recharge",
+    "pages/order/order",
+    "pages/more/get",
+    "pages/more/zfbcollection",
+    "pages/more/bankcard"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#566DCC",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#3cc51f",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "height": "50px",
+    "fontSize": "10px",
+    "iconWidth": "24px",
+    "spacing": "3px",
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "iconPath": "static/image/home.png",
+        "selectedIconPath": "static/image/home.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "iconPath": "static/image/user.png",
+        "selectedIconPath": "static/image/user.png",
+        "text": "我的"
+      },
+      {
+        "pagePath": "pages/service/service",
+        "iconPath": "static/image/service.png",
+        "selectedIconPath": "static/image/service.png",
+        "text": "客服"
+      },
+      {
+        "pagePath": "pages/more/more",
+        "iconPath": "static/image/more.png",
+        "selectedIconPath": "static/image/more.png",
+        "text": "更多"
+      }
+    ]
+  },
+  "usingComponents": {}
+}

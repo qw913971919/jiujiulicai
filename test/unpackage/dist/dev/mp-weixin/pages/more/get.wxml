@@ -1,0 +1,1 @@
+<view><child vue-id="505522de-1" title="{{title}}" data-event-opts="{{[['^modifyname',[['modifyname']]],['^modifyqq',[['modifyqq']]]]}}" bind:modifyname="__e" bind:modifyqq="__e" bind:__l="__l"></child></view>

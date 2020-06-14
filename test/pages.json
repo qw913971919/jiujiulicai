@@ -1,6 +1,12 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
+			"path" : "pages/login/login",
+			"style" : {
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/home/home",
 			"style": {
 				"navigationBarTitleText": "久久收益"
@@ -105,6 +111,7 @@
 				"navigationBarTitleText":"添加提现银行卡"
 			}
         }
+        
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

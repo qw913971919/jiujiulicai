@@ -2,6 +2,17 @@
 	export default {
 		onLaunch: function() {
 			console.log('App Launch')
+			console.log('1')
+			uni.getStorage({
+				key:'token',
+				success:function(res){
+					if(res.data.token){
+						uni.switchTab({
+							url:'pages/home/home'
+						})
+					}
+				}
+			})
 		},
 		onShow: function() {
 			console.log('App Show')

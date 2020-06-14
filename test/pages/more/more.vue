@@ -33,7 +33,7 @@
 				<view>盈利报表</view>
 			</view>
 			<view class="menu_item">
-				<button class="button" hover-class="hover">登出</button>
+				<button class="button" hover-class="hover" @tap="gologin()">登出</button>
 			</view>
 		</view>
 	</view>
@@ -44,7 +44,7 @@
 		data() {
 			return {
 				userdata: {
-					name: 'Cc'
+					name: 'NB0000'
 				}
 			}
 		},
@@ -75,6 +75,15 @@
 			gorecharge(){
 				uni.navigateTo({
 					url:'../recharge/recharge'
+				})
+			},
+			gologin(){
+				uni.removeStorage({
+					key:'token'
+				})
+				uni.navigateTo({
+					// 需要先清除token
+					url:'../login/login'
 				})
 			}
 		}

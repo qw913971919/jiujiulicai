@@ -41,10 +41,10 @@
 				flag: true,
 				money: 0,
 				userdata: {
-					username: 'Cc',
+					username: 'NB0000',
 					bond: 1, //保证金
 					orderlist: [{
-							money: 0,
+							money: 10000,
 							remarks: '无',
 							bond: 2000, //单笔的保证金金额
 							orderid: 123123, //订单的唯一ID

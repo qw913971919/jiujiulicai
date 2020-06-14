@@ -36,7 +36,7 @@
 		data() {
 			return {
 				userData: {
-					username: "Cc", //用户名
+					username: "NB0000", //用户名
 					bond: 1, //保证金余额
 					money: 0, //红利
 					telephone: 111111111111111, //注册手机号
