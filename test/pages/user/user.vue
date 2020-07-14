@@ -15,13 +15,13 @@
 			<view class="box">
 				<view class="getmoney">
 					<view>
-						获利模式<switch @change="getMoney" :checked="!flag"></switch>
+						获利模式<switch :checked="flag" @click="getMoney()"></switch>
 					</view>
 					<view class="recharge" @tap="goRecharge">充值</view>
 				</view>
 			</view>
 		</view>
-		<view v-if="flag" class="tips">若要开始交易，请开启获利模式</view>
+		<view v-if="!flag" class="tips">若要开始交易，请开启获利模式</view>
 		<view v-else class="order" v-for="(item,i) in userdata.orderlist" :key="i">
 			<view>
 				<view>金额:{{item.money}}</view>
@@ -38,64 +38,182 @@
 		data() {
 			return {
 				title: 'Hello',
-				flag: true,
+				flag: false,
 				money: 0,
+				time:null,
 				userdata: {
-					username: 'NB0000',
-					bond: 1, //保证金
-					orderlist: [{
-							money: 10000,
-							remarks: '无',
-							bond: 2000, //单笔的保证金金额
-							orderid: 123123, //订单的唯一ID
-						}, //remarks是提交订单时候的随机备注
-						{
-							money: 3000,
-							remarks: '无',
-							bond: 2000, //单笔的保证金金额
-							orderid: 1666
-						}, //模拟数据
-						{
-							money: 8000,
-							remarks: '无',
-							bond: 2000, //单笔的保证金金额
-							orderid: 1888
-						} //模拟数据
-					]
+					username: '会员',
+					bond: 0, //保证金
+					orderlist: {
+
+					}
 				}
 			}
 		},
 		onLoad() {
 			// 进页面获取数据
-
-
-			//先获取数据覆盖userdata，
-			for (var i = 0; i < this.userdata.orderlist.length; i++) {
-				this.money += this.userdata.orderlist[i].money
-			}
+			this.getUserData()
 		},
-		onPullDownRefresh(){
+		onHide(){
+			// 当页面切换或隐藏时
+			this.swichMoney(false)
+		},
+		onShow() {
+			this.getUserData()
+				this.money = 0;
+				this.flag=false;
+				this.swichMoney(this.flag)
+		},
+		onPullDownRefresh() {
 			// 刷新获取数据在这里获取，这里是页面刷新动画启用时的生命周期，如果想要刷新数据，在这里调用
-			setTimeout(()=>{
+			setTimeout(() => {
 				uni.stopPullDownRefresh()
-				this.flag=true;
+				this.flag = true;
+				uni.request({
+					url: 'http://139.155.25.239:3001/user/changeProfit',
+					method: 'POST',
+					data: {
+						id: uni.getStorageSync('id'),
+						profit: !this.flag
+					},
+					header: {
+						'Authorization': 'Bearer ' + uni.getStorageSync('token')
+					},
+					success: (res) => {
+						console.log(res, '返回值')
+						if (res.data.code === 401) {
+							uni.showToast({
+								title: '登录已超时，请重新登录',
+								icon: 'none',
+								success: (res) => {
+									setTimeout(() => {
+										uni.redirectTo({
+											url: '../login/login1'
+										})
+									}, 1500)
+								}
+							})
+						};
+						if (res.data.code === 0) {
+							console.log(res)
+						}
+					}
+				})
 				//重新发起获取数据请求，写在这里
-			},1000)
+			}, 1000)
 		},
 		methods: {
 			//开关开启之后，开启一个定时器循环请求
-			getMoney(e) {
-				if (e.target.value) {
-					console.log(1)
-					console.log(!e.target.value)
-					this.flag = !e.target.value
+			getMoney() {
+				this.flag=!this.flag;
+				if (this.flag) {
+					console.log('开启时')
+					this.money = 0;
+					this.swichMoney(this.flag);
 				} else {
-					this.flag = true;
+					this.money = 0;
+					this.swichMoney(this.flag)
 				}
 			},
+			getUserData() {
+				uni.request({
+					url: 'http://139.155.25.239:3001/user/getUserInfo',
+					method: 'POST',
+					data: {
+						id: uni.getStorageSync('id'),
+					},
+					header: {
+						'Authorization': 'Bearer ' + uni.getStorageSync('token')
+					},
+					success: (res) => {
+						console.log(res, '用户信息')
+						if (res.data.code === 401) {
+							uni.showToast({
+								title: '登录已超时，请重新登录',
+								icon: 'none',
+								success: (res) => {
+									setTimeout(() => {
+										uni.redirectTo({
+											url: '../login/login1'
+										})
+									}, 1500)
+								}
+							})
+						};
+						if (res.data.code === 0) {
+							this.userdata = res.data.data
+							console.log(this.userdata, '获取到的数据')
+
+						}
+					}
+				})
+			},
 			goRecharge() {
-				uni.navigateTo({
-					url: '../recharge/recharge'
+				this.swichMoney(false)
+				setTimeout(()=>{
+					uni.navigateTo({
+						url: '../recharge/recharge'
+					})
+				},200)
+
+			},
+			swichMoney(flag){
+				uni.request({
+					url: 'http://139.155.25.239:3001/user/changeProfit',
+					method: 'POST',
+					data: {
+						id: uni.getStorageSync('id'),
+						profit: flag
+					},
+					header: {
+						'Authorization': 'Bearer ' + uni.getStorageSync('token')
+					},
+					success: (res) => {
+						console.log(res, '返回值')
+						if (res.data.code === 401) {
+							uni.showToast({
+								title: '登录已超时，请重新登录',
+								icon: 'none',
+								success: (res) => {
+									setTimeout(() => {
+										uni.redirectTo({
+											url: '../login/login1'
+										})
+									}, 1500)
+								}
+							})
+						};
+						if (res.data.code === 0) {
+							console.log(res, '已开启获利模式')
+							if(flag){
+								//成功开启获利模式后，开始获取管理员的派单
+								uni.request({
+									url: 'http://139.155.25.239:3001/profit/getProfit',
+									method: 'POST',
+									data: {
+										userId: uni.getStorageSync('id'),
+									},
+									header: {
+										'Authorization': 'Bearer ' + uni.getStorageSync('token')
+									},
+									success: (res) => {
+										if (res.data.code === 0) {
+											this.userdata.orderlist = res.data.data;
+											for (var i = 0; i < res.data.data.length; i++) {
+												console.log(res.data.data[i].money)
+												this.money += Number(res.data.data[i].money)
+											}
+											console.log(res.data.data, '获取到的订单数据')
+										}
+									},
+									fail: (err) => {
+										console.log(err)
+									}
+								})
+							}
+
+						}
+					}
 				})
 			},
 			confirm(money, orderid) {
@@ -107,6 +225,71 @@
 					success: res => {
 						if (res.confirm) {
 							console.log('确认收款')
+							uni.request({
+								url: 'http://139.155.25.239:3001/profit/checkUserProfit',
+								method: 'POST',
+								data: {
+									userId: uni.getStorageSync('id'),
+									id: '5f0ad5651b6433161d60a3ae'
+								},
+								header: {
+									'Authorization': 'Bearer ' + uni.getStorageSync('token')
+								},
+								success: (res) => {
+									console.log(res, '获利成功')
+									this.money = 0;
+									if (res.data.code === 0) {
+										// 删除订单
+										uni.request({
+											url: 'http://139.155.25.239:3001/profit/deleteProfit',
+											method: 'POST',
+											data: {
+												id: '5f0ad5651b6433161d60a3ae'
+											},
+											header: {
+												'Authorization': 'Bearer ' + uni.getStorageSync('token')
+											},
+											success: (res) => {
+												console.log(res,'删除订单')
+												if (res.data.code === 0) {
+													console.log('删除订单成功')
+												}
+											},
+											fail: (err) => {
+												console.log(err)
+											}
+										})
+										// 重新获取订单数据
+										uni.request({
+											url: 'http://139.155.25.239:3001/profit/getProfit',
+											method: 'POST',
+											data: {
+												userId: uni.getStorageSync('id'),
+											},
+											header: {
+												'Authorization': 'Bearer ' + uni.getStorageSync('token')
+											},
+											success: (res) => {
+												if (res.data.code === 0) {
+													this.userdata.orderlist = res.data.data;
+													for (var i = 0; i < res.data.data.length; i++) {
+														console.log(res.data.data[i].money)
+														this.money += Number(res.data.data[i].money)
+													}
+													console.log(res.data.data, '获取到的订单数据')
+												}
+											},
+											fail: (err) => {
+												console.log(err)
+											}
+										})
+
+									}
+
+
+								},
+							})
+
 							//调用接口，发起请求，更改订单状态，同时重新调获取页面数据的接口，刷新页面
 						} else if (res.cancel) {
 							console.log('取消提交')

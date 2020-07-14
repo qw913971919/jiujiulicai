@@ -9,7 +9,7 @@
 		{
 			"path": "pages/home/home",
 			"style": {
-				"navigationBarTitleText": "久久收益"
+				"navigationBarTitleText": "久富"
 			}
 		},
 		{
@@ -112,6 +112,12 @@
 			}
         }
         
+        ,{
+            "path" : "pages/login/login1",
+            "style" : {
+				"navigationBarTitleText":"登录"
+			}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

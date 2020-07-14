@@ -2,11 +2,11 @@
 	<view class="content">
 		<view class="button" @tap="gobankcard()">+</view>
 		<view v-if="flag">
-			<view v-for="(item,i) in userdata.bank" :key="i" class="item_box">
-				<text style="color:#000000;font-size: 45upx;">{{item.title}}</text>
-				<text>账户号码:{{item.number}}</text>
-				<text>账户名称:{{item.name}}</text>
-				<text>开户省份:{{item.address}}</text>
+			<view class="item_box">
+				<text style="color:#000000;font-size: 45upx;">{{userdata.bankname}}</text>
+				<text>开户人姓名:{{userdata.name}}</text>
+				<text>账户号码:{{userdata.cardid}}</text>
+				<text>开户支行地址:{{userdata.bank}}</text>
 			</view>
 		</view>
 		<view v-else class="none">暂未设置提现账户</view>
@@ -18,26 +18,42 @@
 	export default {
 		data() {
 			return {
-				userdata: {
-					bank:[{
-						title:'招商银行',//什么银行
-						number:222222222,//卡号
-						name:'蒋自豪',//开户人姓名
-						address:'四川省 成都市',//开户省份
-					},{
-						title:'招商银行',//什么银行
-						number:222222222,//卡号
-						name:'蒋自豪',//开户人姓名
-						address:'四川省 成都市',//开户省份
-					}]
-				},
+				userdata: {},
 				flag: false,
 			};
 		},
-		onLoad(option) {
+		onShow() {
 			// 在这里获取银行卡数据
+			uni.request({
+				url:'http://139.155.25.239:3001/user/getUserInfo',
+				method:'POST',
+				data:{
+					id:uni.getStorageSync('id'),
+				},
+				header:{'Authorization': 'Bearer '+uni.getStorageSync('token')},
+				success:(res)=>{
+					console.log(res,'用户信息')
+					if(res.data.code===401){
+						uni.showToast({
+							title:'登录已超时，请重新登录',
+							icon:'none',
+							success:(res)=>{
+								setTimeout(()=>{
+									uni.redirectTo({
+										url: '../login/login1'
+									})
+								},1500)
+							}
+						})
+					};
+					if(res.data.code===0){
+						this.flag=true;
+						this.userdata=res.data.data
+					}
+				}
+			})
 			// 获取数据成功后将flag的值改为true；
-			this.flag = true;
+
 		},
 		methods: {
 			gobankcard() {

@@ -8,6 +8,7 @@
 </template>
 
 <script>
+	import get from '@/new_file.js'
 	export default {
 		data() {
 			return {
@@ -61,7 +62,9 @@
 				},]
 			}
 		},
-		onLoad() {},
+		onLoad() {
+			get.request(123)
+		},
 		methods: {
 			goProblemContent(id) {
 				console.log(id)

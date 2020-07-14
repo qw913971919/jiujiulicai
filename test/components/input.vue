@@ -30,6 +30,11 @@
 				}
 				if(this.title==='输入姓名'){
 					this.$emit('modifyname',this.text)
+					return
+				}
+				if(this.title==='输入新的密码'){
+					this.$emit('modifypassword',this.text)
+					return
 				}
 			}
 		}

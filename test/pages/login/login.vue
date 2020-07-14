@@ -1,19 +1,8 @@
 <template>
 	<view class="content">
-		<view :class="{'login-wrap':true,'move':move,'go':flag}" v-show="showLogin">
-			<text style="color: #000000;">登录</text>
-			<input type="text" placeholder="请输入用户名" v-model="username">
-			<input type="password" placeholder="请输入密码" v-model="password">
-			<button @click="login()">登录</button>
-			<text @click="ToRegister">没有账号？马上注册</text>
-		</view>
-
-		<view :class="{'register-wrap':true,'move':move,'go':!flag}" v-show="showRegister">
-			<text style="color: #000000;">注册</text>
-			<input type="text" placeholder="请输入用户名" v-model="newUsername">
-			<input type="password" placeholder="请输入密码" v-model="newPassword">
-			<button @click="register">注册</button>
-			<text @click="ToLogin">已有账号？马上登录</text>
+		<view class="button" @click="go()">
+			立即登录
+			<view class="go">→</view>
 		</view>
 	</view>
 </template>
@@ -21,8 +10,8 @@
 	export default {
 		data() {
 			return {
-				move:false,
-				flag:false,
+				move: false,
+				flag: false,
 				showLogin: true,
 				showRegister: false,
 				showTishi: false,
@@ -34,45 +23,11 @@
 			}
 		},
 		methods: {
-			ToRegister(){
-				this.move=true;
-				this.flag=false;
-				setTimeout(()=>{
-					this.showLogin=false;
-					this.showRegister=true;
-					this.move=false;
-				},1000)
+			go(){
+				uni.redirectTo({
+					url:'./login1'
+				})
 			},
-			ToLogin(){
-				this.move=true;
-				this.flag=!this.flag;
-				setTimeout(()=>{
-					this.showLogin=true;
-					this.showRegister=false;
-					this.move=false;
-				},1000)
-
-			},
-			login(){
-				// 向服务器发起请求，如果返回token则登录成功，储存token跳转至 home界面
-				if(this.username==='NB00'&&this.password==='000000'){
-					uni.setStorage({
-						key:'token',
-						data:{
-							token:1
-						}
-					})
-					console.log('跳转页面')
-					uni.switchTab({
-						url:'../home/home'
-					})
-				}else{
-					uni.showToast({
-						title:'登录失败',
-						icon:'none',
-					})
-				}
-			}
 		}
 	}
 </script>
@@ -80,52 +35,94 @@
 	.login-wrap {
 		text-align: center;
 		position: relative;
-		top:50%;
-		left:50%;
-		transform: translate(-50%,-40%);
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -40%);
 	}
-	.move{
+
+	.move {
 		animation: move 1s;
-		animation-fill-mode:forwards;
-		@keyframes move
-		{
-			from{left:50%}
-			to{left:-50%}
+		animation-fill-mode: forwards;
+
+		@keyframes move {
+			from {
+				left: 50%
+			}
+
+			to {
+				left: -50%
+			}
 		}
 
 	}
-	.go{
-		animation: goto 1s;
-		animation-fill-mode:forwards;
-		@keyframes goto
-		{
-			from{left:150%}
-			to{left:50%}
-		}
-	
-	}
-	.register-wrap{
+
+	// .go {
+	// 	animation: goto 1s;
+	// 	animation-fill-mode: forwards;
+
+	// 	@keyframes goto {
+	// 		from {
+	// 			left: 150%
+	// 		}
+
+	// 		to {
+	// 			left: 50%
+	// 		}
+	// 	}
+
+	// }
+
+	.register-wrap {
 		text-align: center;
 		position: relative;
-		top:50%;
-		left:50%;
-		transform: translate(-50%,-40%);
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -40%);
 	}
-	.content{
+
+	.content {
 		position: fixed;
 		overflow: auto;
-		width:100%;
+		width: 100%;
 		height: 100%;
 		background-image: url(../../static/image/login.png);
 		background-repeat: no-repeat;
-		background-size:100% 100%;
+		background-size: 100% 100%;
 		overflow-x: hidden;
+
+		.button {
+			background-color: #1d193a;
+			position:absolute;
+			color: #FFFFFF;
+			text-align: center;
+			line-height: 100upx;
+			width: 60%;
+			height: 100upx;
+			bottom: 220upx;
+			border-radius: 50upx;
+			left:50%;
+			transform: translateX(-50%);
+			.go{
+				width:80upx;
+				height: 80upx;
+				line-height: 80upx;
+				background-color: #dcad14;
+				position: absolute;
+				top: 10upx;
+				right: 20upx;
+				border-radius: 50%;
+				color:#1d193a;
+				font-size: 60upx;
+				font-weight: 900;
+			}
+		}
 	}
+
 	input {
 		display: block;
 		border-radius: 20upx;
-		width: 400upx;
-		height: 50upx;
+		width: 80%;
+		height: 60upx;
 		line-height: 50upx;
 		margin: 0 auto;
 		margin-bottom: 30upx;
@@ -142,9 +139,9 @@
 
 	button {
 		display: block;
-		width: 400upx;
-		height: 50upx;
-		line-height: 50upx;
+		width: 80%;
+		height: 60upx;
+		line-height: 60upx;
 		margin: 0 auto;
 		border: none;
 		background-color: #41b883;

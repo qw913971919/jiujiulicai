@@ -70,7 +70,67 @@ console.log(a)
 				}
 				console.log('即将发起订单',this.form)
 				// 发起订单后，跳转回首页
-				
+				uni.request({
+					url:'http://139.155.25.239:3001/user/getUserInfo',
+					method:'POST',
+					data:{
+						id:uni.getStorageSync('id'),
+					},
+					header:{'Authorization': 'Bearer '+uni.getStorageSync('token')},
+					success:(res)=>{
+						console.log(res,'用户信息')
+						if(res.data.code===401){
+							uni.showToast({
+								title:'登录已超时，请重新登录',
+								icon:'none',
+								success:(res)=>{
+									setTimeout(()=>{
+										uni.redirectTo({
+											url: '../login/login1'
+										})
+									},1500)
+								}
+							})
+						};
+						if(res.data.code===0){
+							uni.request({
+								url:'http://139.155.25.239:3001/user/completeInfo',
+								method:'POST',
+								data:{
+									id:uni.getStorageSync('id'),
+									username:res.data.data.username,
+									qq:res.data.data.qq,
+									name:this.form.name,
+									cardid:this.form.card,//卡号
+									bankname:this.form.bank,//所属银行
+									bank:this.form.address,//开户地
+								},
+								header:{'Authorization': 'Bearer '+uni.getStorageSync('token')},
+								success:(res)=>{
+									console.log(res,'用户信息')
+									if(res.data.code===401){
+										uni.showToast({
+											title:'登录已超时，请重新登录',
+											icon:'none',
+											success:(res)=>{
+												setTimeout(()=>{
+													uni.redirectTo({
+														url: '../login/login1'
+													})
+												},1500)
+											}
+										})
+									};
+									if(res.data.code===0){
+										console.log(res)
+										
+									}
+								}
+							})
+							
+						}
+					}
+				})
 				// 以上应该写发起订单，一下是跳转回首页
 				uni.showToast({
 					title:'提交订单成功',

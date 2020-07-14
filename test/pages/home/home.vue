@@ -36,11 +36,8 @@
 		data() {
 			return {
 				userData: {
-					username: "NB0000", //用户名
-					bond: 1, //保证金余额
-					money: 0, //红利
-					telephone: 111111111111111, //注册手机号
-					name: "自卑" //注册姓名
+					bond:0,
+					username:'游客'
 				},
 				announcement: [{
 					date: "2020/5/28",
@@ -74,13 +71,42 @@
 		},
 		onLoad() {
 
-			// getUserData()
+			this.getUserData()
 			// goNoticeData()
 			//无接口，暂不写请求，伪造数据
 		},
+		onShow() {
+			this.getUserData()
+		},
 		methods: {
 			getUserData(){
-				//暂无
+				uni.request({
+					url:'http://139.155.25.239:3001/user/getUserInfo',
+					method:'POST',
+					data:{
+						id:uni.getStorageSync('id'),
+					},
+					header:{'Authorization': 'Bearer '+uni.getStorageSync('token')},
+					success:(res)=>{
+						console.log(res,'用户信息')
+						if(res.data.code===401){
+							uni.showToast({
+								title:'登录已超时，请重新登录',
+								icon:'none',
+								success:(res)=>{
+									setTimeout(()=>{
+										uni.redirectTo({
+											url: '../login/login1'
+										})
+									},1500)
+								}
+							})
+						};
+						if(res.data.code===0){
+							this.userData=res.data.data
+						}
+					}
+				})
 			},
 			goNoticeData(){
 				// 暂无

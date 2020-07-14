@@ -1,5 +1,5 @@
 {
-    "name" : "1",
+    "name" : "久富",
     "appid" : "__UNI__AEF7C1A",
     "description" : "",
     "versionName" : "1.0.3",
@@ -55,9 +55,9 @@
             },
             "splashscreen" : {
                 "android" : {
-                    "hdpi" : "C:/Users/Administrator/Desktop/QQ图片20200603073824.png",
-                    "xhdpi" : "C:/Users/Administrator/Desktop/QQ图片20200603073824.png",
-                    "xxhdpi" : "C:/Users/Administrator/Desktop/QQ图片20200603073824.png"
+                    "hdpi" : "static/image/login.png",
+                    "xhdpi" : "static/image/login.png",
+                    "xxhdpi" : "static/image/login.png"
                 }
             },
             "icons" : {

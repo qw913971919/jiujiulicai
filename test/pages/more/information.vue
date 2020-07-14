@@ -2,7 +2,7 @@
 	<view class="content">
 		<view class="item">
 			<text>账号</text>
-			<view>{{userdata.user}}<text></text></view>
+			<view>{{userdata.username}}<text></text></view>
 		</view>
 		<view class="item">
 			<text>姓名</text>
@@ -14,11 +14,7 @@
 		</view>
 		<view class="item">
 			<text>变更密码</text>
-			<view><text>></text></view>
-		</view>
-		<view class="item">
-			<text>设定支付密码</text>
-			<view>{{userdata.password?'已设定交易密码':'尚未设定'}}<text>></text></view>
+			<view @tap="goget('输入新的密码')"><text>></text></view>
 		</view>
 	</view>
 </template>
@@ -28,17 +24,46 @@
 		data(){
 			return{
 				userdata:{
-					user:'NB0000',
-					name:'自卑',
-					qq:'913971919',
-					password:false//是否设定了支付密码
+					username:'遊客',
+					name:'',
+					qq:'',
 				},
 			}
 		},
 		onLoad(){
+			this.getUserData()
 			// 在这里获取用户设局，覆盖userdata
 		},
 		methods:{
+			getUserData(){
+				uni.request({
+					url:'http://139.155.25.239:3001/user/getUserInfo',
+					method:'POST',
+					data:{
+						id:uni.getStorageSync('id'),
+					},
+					header:{'Authorization': 'Bearer '+uni.getStorageSync('token')},
+					success:(res)=>{
+						console.log(res,'查看')
+						if(res.data.code===401){
+							uni.showToast({
+								title:'登录已超时，请重新登录',
+								icon:'none',
+								success:(res)=>{
+									setTimeout(()=>{
+										uni.redirectTo({
+											url: '../login/login1'
+										})
+									},1500)
+								}
+							})
+						};
+						if(res.data.code===0){
+							this.userdata=res.data.data
+						}
+					}
+				})
+			},
 			goget(type){
 				uni.navigateTo({
 					url:'./get?type='+type,
