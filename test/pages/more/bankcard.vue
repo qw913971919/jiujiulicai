@@ -3,7 +3,7 @@
 		<view>卡号：<input v-model="form.card" style="background-color: #FFFFFF;" :class="{'test':flag1}" @focus="flag1=true" @blur="flag1=false"/></view>
 		<view>所属银行:<input v-model="form.bank" style="background-color: #FFFFFF;" :class="{'test':flag2}" @focus="flag2=true" @blur="flag2=false"/></view>
 		<view>开户人姓名:<input v-model="form.name" style="background-color: #FFFFFF;" :class="{'test':flag3}" @focus="flag3=true" @blur="flag3=false"/></view>
-		<view>开户省份:<input v-model="form.address" style="background-color: #FFFFFF;" :class="{'test':flag4}" @focus="flag4=true" @blur="flag4=false"/></view>
+		<view>开户支行:<input v-model="form.address" style="background-color: #FFFFFF;" :class="{'test':flag4}" @focus="flag4=true" @blur="flag4=false"/></view>
 		<button @tap="submit" style="width:65%;margin-top:50upx;">提交信息</button>
 	</view>
 </template>

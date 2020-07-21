@@ -39,6 +39,11 @@
 					header:{'Authorization': 'Bearer '+uni.getStorageSync('token')},
 					success:(res)=>{
 						console.log(res)
+						if(res.data.code==0){
+							this.form.card=res.data.data[0].cardid,
+							this.form.bank=res.data.data[0].bankname,
+							this.form.name=res.data.data[0].username
+						}
 					}
 				})
 			},

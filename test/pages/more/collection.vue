@@ -47,6 +47,9 @@
 			// 通过token在这里获取用户的收款账户页数据
 			this.getimageslist()
 		},
+		onShow(){
+			this.getimageslist()
+		},
 		methods: {
 			gowx() {
 				uni.navigateTo({

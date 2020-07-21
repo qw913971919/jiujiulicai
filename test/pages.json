@@ -118,6 +118,12 @@
 				"navigationBarTitleText":"登录"
 			}
         }
+        ,{
+            "path" : "pages/profitMoney/profitMoney",
+            "style" : {
+				"navigationBarTitleText":"红利转移"
+			}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

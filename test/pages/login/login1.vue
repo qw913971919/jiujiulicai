@@ -11,11 +11,6 @@
 				<input type="password" placeholder="请输入密码" v-model="password">
 				<button @click="login()">登录</button>
 			</view>
-			<view v-else-if="flag===1">
-				<input type="text" placeholder="请输入手机号" v-model="username">
-				<input type="password" placeholder="请输入密码" v-model="password">
-				<button @click="regist()">注册</button>
-			</view>
 		</view>
 	</view>
 </template>
@@ -25,7 +20,7 @@
 		data() {
 			return {
 				flag: 0,
-				lis: ['密码登录', '账号注册'],
+				lis: ['密码登录'],
 				username: '',
 				password: '',
 			};

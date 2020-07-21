@@ -1,7 +1,8 @@
 <template>
 	<view class="content">
-		<prompt ref="prompt" @onConfirm="onConfirm" @onCancel="onCancel" title="提示" :text="promptText" :textname="name"></prompt>
-		<view class="button" @tap="prompt()">+</view>
+		<prompt :show="promptType === 'uni-prompt'" @onConfirm="onConfirm" @onCancel="prompt('')" :text="promptText"
+		 :textname="name"></prompt>
+		<view class="button" @tap="prompt('uni-prompt')">+</view>
 		<view v-if="userdata.alipay[0]">
 			<view class="item_box" style="margin:20upx 0upx;" v-if="trueimages[0]">
 				<text style="font-weight: 550;font-size: 35upx;">启用中的账户</text>
@@ -49,8 +50,9 @@
 				images: false,
 				trueimages: [],
 				falseimages: [],
-				promptText:'请输入账号名',
-				name:'请输入支付宝真实姓名',
+				promptType: '',
+				promptText: '请输入账号名',
+				name: '请输入支付宝真实姓名',
 				userdata: {
 					alipay: {
 						// enable: {
@@ -85,10 +87,11 @@
 			prompt,
 		},
 		methods: {
-			onConfirm(a,b) {
-				var _this=this
-				console.log(a,'支付宝账号')
-				console.log(b,'支付宝实名')
+			onConfirm(a, b) {
+				var _this = this
+				console.log(a, '支付宝账号')
+				console.log(b, '支付宝实名')
+				this.prompt('false')
 				uni.chooseImage({
 					count: 1, //上传图片的数量，默认是9
 					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
@@ -108,13 +111,11 @@
 								console.log(uploadFileRes)
 								//这里要注意，uploadFileRes.data是个String类型，要转对象的话需要JSON.parse一下
 								var obj = JSON.parse(uploadFileRes.data);
-								console.log(obj,'看看是啥')
-								_this.getopenprofituser(obj.data,a,b)
-								setTimeout(()=>{
-									location.reload();
-								},200)
+								console.log(obj, '看看是啥')
+								_this.getopenprofituser(obj.data, a, b)
+
 							},
-							fail:(err)=>{
+							fail: (err) => {
 								console.log(err)
 							}
 						})
@@ -122,18 +123,18 @@
 
 				});
 			},
-			onCancel(e){
+			onCancel(e) {
 				console.log(e)
 			},
-			changePayPicMode(id,mode){
-				console.log(id,mode)
+			changePayPicMode(id, mode) {
+				console.log(id, mode)
 				uni.request({
 					url: 'http://139.155.25.239:3001/paypic/changePayPicMode',
 					method: 'POST',
 					data: {
-						authorId:uni.getStorageSync('id'),
+						authorId: uni.getStorageSync('id'),
 						id: id,
-						mode:!mode
+						mode: !mode
 					},
 					header: {
 						'Authorization': 'Bearer ' + uni.getStorageSync('token')
@@ -141,24 +142,24 @@
 					success: (res) => {
 						console.log(res)
 						if (res.statusCode === 200) {
-							console.log(res,'是否成功更改状态')
+							console.log(res, '是否成功更改状态')
 							uni.showToast({
-								title:'切换成功',
-								icon:'none',
-								success:(res)=>{
-									setTimeout(()=>{
+								title: '切换成功',
+								icon: 'none',
+								success: (res) => {
+									setTimeout(() => {
 										uni.navigateTo({
-											url:'./zfbcollection'
+											url: './zfbcollection'
 										})
 										// 刷新页面
-									},1500)
+									}, 1500)
 								}
 							})
 						}
 					},
 				})
 			},
-			deletePayPic(id){
+			deletePayPic(id) {
 				console.log(this.trueimages)
 				uni.request({
 					url: 'http://139.155.25.239:3001/paypic/deletePayPic',
@@ -172,35 +173,37 @@
 					success: (res) => {
 						console.log(res)
 						if (res.statusCode === 200) {
-							console.log(res,'是否成功删除')
+							console.log(res, '是否成功删除')
 							uni.showToast({
-								title:'删除成功',
-								icon:'none',
-								success:(res)=>{
-									setTimeout(()=>{
+								title: '删除成功',
+								icon: 'none',
+								success: (res) => {
+									setTimeout(() => {
 										uni.navigateTo({
-											url:'./zfbcollection'
+											url: './zfbcollection'
 										})
 										// 刷新页面
-									},1500)
+									}, 1500)
 								}
 							})
 						}
 					},
 				})
 			},
-			prompt() {
-				this.$refs.prompt.show();
+
+			prompt(type) {
+				console.log(type)
+				this.promptType = type;
 			},
-			getopenprofituser(url,a,b) {
+			getopenprofituser(url, a, b) {
 				uni.request({
 					url: 'http://139.155.25.239:3001/paypic/userAddPaypic',
 					method: 'POST',
 					data: {
 						authorId: uni.getStorageSync('id'),
-						picUrl:url,
-						name:b,
-						username:a,
+						picUrl: url,
+						name: b,
+						username: a,
 					},
 					header: {
 						'Authorization': 'Bearer ' + uni.getStorageSync('token')
@@ -221,21 +224,17 @@
 							})
 						};
 						if (res.data.code === 0) {
-							this.images = res.data.data
-							for (var i = 0; i < this.images.length; i++) {
-								if (this.images[i].mode == true) {
-									this.images[i].picUrl = this.images[i].picUrl.replace(/^.\//, '/')
-									this.trueimages.push(this.images[i])
-								}
-								if (this.images[i].mode == false) {
-									this.falseimages.push(this.images[i])
-								}
-							}
+							console.log(res.data.data,'设置图片成功后看看返回值')
+							this.getimageslist()
 						}
+
 					},
 				})
+				// setTimeout(() => {
+				// 	location.reload();
+				// }, 500)
 			},
-			getimageslist(){
+			getimageslist() {
 				uni.request({
 					url: 'http://139.155.25.239:3001/paypic/getUserPayPic',
 					method: 'POST',
@@ -248,13 +247,15 @@
 					success: (res) => {
 						console.log(res, '获取图片')
 						if (res.data.code === 0) {
-							this.userdata.alipay=res.data.data
-							this.images=true;
-							for(var i=0;i<this.userdata.alipay.length;i++){
-								if(this.userdata.alipay[i].mode===true){
+							this.userdata.alipay = res.data.data
+							this.images = true;
+							this.trueimages=[];
+							this.falseimages=[];
+							for (var i = 0; i < this.userdata.alipay.length; i++) {
+								if (this.userdata.alipay[i].mode === true) {
 									this.trueimages.push(this.userdata.alipay[i])
 								}
-								if(this.userdata.alipay[i].mode===false){
+								if (this.userdata.alipay[i].mode === false) {
 									this.falseimages.push(this.userdata.alipay[i])
 								}
 							}
@@ -274,6 +275,7 @@
 		background-color: #f0f0f0;
 		padding: 10upx 20upx;
 		padding-bottom: 100upx;
+
 		.none {
 			position: fixed;
 			top: 50%;

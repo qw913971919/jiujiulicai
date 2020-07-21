@@ -1,8 +1,8 @@
 <template>
 	<view>
-		<text class="title">{{html.title}}</text>
+		<text class="title">{{problemcontent.title}}</text>
 		<view class="content">
-			<view v-html="html.content"></view>
+			<view v-html="problemcontent.content"></view>
 		</view>
 	</view>
 </template>
@@ -13,74 +13,40 @@
 			return {
 				id:0,
 				html:{},
-				problemcontent: [{
-					date:'2020/5/28',
-					title:'投资流程介绍',
-					id:10,
-					content:'<div><p style="margin:0pt; orphans:0; text-align:justify; widows:0"><span style="font-family:宋体; font-size:12pt">下载APP</span><br /><span style="font-family:宋体; font-size:12pt">↓</span><br /><span style="font-family:宋体; font-size:12pt">申请帐密</span><br /><span style="font-family:宋体; font-size:12pt">↓</span><br /><span style="font-family:宋体; font-size:12pt">点击[我要充值]存入保证金</span><br /><span style="font-family:宋体; font-size:12pt">↓</span><br /><span style="font-family:宋体; font-size:12pt">开启[获利模式]</span><br /><span style="font-family:宋体; font-size:12pt">等待投资配对</span><br /><span style="font-family:宋体; font-size:12pt">↓</span><br /><span style="font-family:宋体; font-size:12pt">核实并[确认]投资本金回收</span><br /><span style="font-family:宋体; font-size:12pt">完成投资</span><br /><br /><span style="font-family:宋体; font-size:12pt">成功赚取红利!</span><br /><br /><span style="font-family:宋体; font-size:12pt">一当您想要休息时，无论是睡眠时间或出门旅游，,都可以藉由关闭获利模式来中止投资配对。</span><br /><br /><span style="font-family:宋体; font-size:12pt">一投资配对成功后，若交易未完成，则20分钟后该笔订单失败，订单将自动取消。</span><br /><br /><span style="font-family:宋体; font-size:12pt">*只要是失败的交易单，我司将退还相应保证金,但该笔订单不会产生现金回馈，也不会扣除任何手续费。</span></p></div>'
-				},
-				{
-					date:'2020/5/28',
-					title:'投资的利润',
-					id:11,
-					content:'<div><p style="margin:0pt; orphans:0; text-align:justify; widows:0"><span style="font-family:宋体; font-size:12pt">每一单确认之后的利润会在保证金上面直接添加</p></div>'
-				},
-				{
-					date:'2020/5/28',
-					title:'如何充值',
-					id:12,
-					content:'<div><p style="margin:0pt; orphans:0; text-align:justify; widows:0"><span style="font-family:宋体; font-size:12pt">点击更多→我要充值→输入需要充值的金额→确认提交→对应提供的银行信息进行打款→打款后确认订单</p></div>'
-				},
-				{
-					date:'2020/5/28',
-					title:'充值后多久到账',
-					id:13,
-					content:'<div><p style="margin:0pt; orphans:0; text-align:justify; widows:0"><span style="font-family:宋体; font-size:12pt">正常情况下在十分钟内到账，如十分钟内未到账，请于客服人员进行联系</p></div>'
-				},
-				{
-					date:'2020/5/28',
-					title:'提现相关',
-					id:14,
-					content:'<div><p style="margin:0pt; orphans:0; text-align:justify; widows:0"><span style="font-family:宋体; font-size:12pt">在更多页面绑定好提现账号，在最后一笔订单结束后的12小时后可以申请提现，提现只需跟客服人员报备即可，提现到账时间是在2小时内，提现金额不得超过充值金额的70%，如超过70%将会收取30%的手续费。</p></div>'
-				},
-				{
-					date:'2020/5/28',
-					title:'如何投资理财',
-					id:15,
-					content:'<div><p style="margin:0pt; orphans:0; text-align:justify; widows:0"><span style="font-family:宋体; font-size:12pt">充值好保证金后，打开获利模式进行处理订单，按照平台给予的订单进行确认</p></div>'
-				},
-				{
-					date:'2020/5/28',
-					title:'订单失败或订单金额相关',
-					id:16,
-					content:'<div><p style="margin:0pt; orphans:0; text-align:justify; widows:0"><span style="font-family:宋体; font-size:12pt">在接到订单后，如平台的投资方未能打款到被投资人支付宝或聚合码，请勿确认只需等待十五分钟后即可。</span><br /><span style="font-family:宋体; font-size:12pt">如被投资方订单显示5000元，投资方只打款4900元的情况下，请跟客服报备。</span></p></div>'
-				},
-				{
-					date:'2020/5/28',
-					title:'被投资者需要提供什么',
-					id:17,
-					content:'<div><p style="margin:0pt; orphans:0; text-align:justify; widows:0"><span style="font-family:宋体; font-size:12pt">本平台是进行支付宝二维码和聚合码的投资理财。</span><br /><span style="font-family:宋体; font-size:12pt">需要被投资者提供支付宝的真实姓名和支付宝账户和支付宝二维码进行获利投资。</span><br /><span style="font-family:宋体; font-size:12pt">聚合码和支付宝理财填写的资料一样。</span></p></div>'
-				},
+				problemcontent: [
 				]
 				
 			}
 		},
 		onLoad(option) {
 			this.id=option.id
-			console.log(option.id)
-			for(var i=0;i<this.problemcontent.length;i++){
-				if(this.id==this.problemcontent[i].id){
-					console.log('赋值')
-					this.html=this.problemcontent[i]
-				}
-			}
-			// getNoticeContent(option.id)
+			this.getNoticeContent(this.id)
 
 		},
 		methods: {
 			getNoticeContent(id){
-				// 暂无接口
-			}
+				uni.request({
+					url:'http://139.155.25.239:3001/announce/getAnnounceDetail',
+					method:"POST",
+					data:{
+						id:id
+					},
+					header:{'Authorization': 'Bearer '+uni.getStorageSync('token')},
+					success:res=>{
+						console.log(res)
+						if(res.data.code==0){
+							this.problemcontent=res.data.data
+						}
+					}
+				})
+			},
+			renderTime(date) {
+			      var dateee = new Date(date).toJSON();
+			      return new Date(+new Date(dateee) + 8 * 3600 * 1000)
+			        .toISOString()
+			        .replace(/T/g, " ")
+			        .replace(/\.[\d]{3}Z/, "");
+			},
 		}
 	}
 </script>

@@ -7,7 +7,7 @@
 			<image src="../../static/image/logo.png" mode="aspectFit"></image>
 			<view>
 				<text>账号</text>
-				<text>{{userdata.username}}</text>
+				<text>{{userdata.telephone}}</text>
 			</view>
 		</view>
 		<!-- 菜单区域 -->

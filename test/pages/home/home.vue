@@ -23,8 +23,8 @@
 				<text class="b">系统公告</text>
 				<view @tap="goNotice()">查看全部>></view>
 			</view>
-			<view v-for="(item,i) in announcement" :key="i" class="announcement_content" @tap="goNoticecotent(item.id)">
-				<text>{{item.date}}</text>
+			<view v-for="(item,i) in announcement" :key="i" class="announcement_content" @tap="goNoticecotent(item._id)">
+				<text>{{dateedit(item.title,item.date)}}</text>
 				<view class="title">{{item.title}}</view>
 			</view>
 		</view>
@@ -36,42 +36,16 @@
 		data() {
 			return {
 				userData: {
-					bond:0,
-					username:'游客'
+					bond: 0,
+					username: '游客'
 				},
-				announcement: [{
-					date: "2020/5/28",
-					title: "随便写几个循环用，这是第一个",
-					id:1
-				}, {
-					date: "2020/5/28",
-					title: "随便写几个，这是第二个",
-					id:2
-				}, {
-					date: "2020/5/28",
-					title: "随便写几个，这是第三个",
-					id:3
-				}, 
-				{
-					date: "2020/5/28",
-					title: "随便写几个，这是第四个",
-					id:4
-				}, 
-				{
-					date: "2020/5/28",
-					title: "随便写几个，这是第五个",
-					id:5
-				}, 
-				{
-					date: "2020/5/28",
-					title: "随便写几个，这是第六个",
-					id:6
-				}, ]
+				announcement: []
 			}
 		},
 		onLoad() {
 
 			this.getUserData()
+			this.getAllAnnounce()
 			// goNoticeData()
 			//无接口，暂不写请求，伪造数据
 		},
@@ -79,61 +53,126 @@
 			this.getUserData()
 		},
 		methods: {
-			getUserData(){
-				uni.request({
-					url:'http://139.155.25.239:3001/user/getUserInfo',
-					method:'POST',
-					data:{
-						id:uni.getStorageSync('id'),
+			dateedit(title, date) {
+				if(title=="请仔细阅读平台公告和新手帮助"){
+					return "2020-06-07 00:00:00"
+				}
+				if (title == "平台运营火爆开启"){
+					return "2020-06-07 00:00:00"
+				}
+				if (title == "十码同跑模式"){
+					return "2020-06-08 00:00:00"
+				}
+				if (title == "关于代理公告"){
+					return "2020-06-07 00:00:00"
+				}
+				if(title=="大量订单火爆开启!"){
+					return "2020-06-15 00:00:00"
+				}
+				if(title=="未及时处理处罚公告"){
+					return "2020-06-20 23:00:00"
+				}
+				if(title=="大量订单火爆开启!!"){
+					return "2020-07-01 00:00:00"
+				}
+				if(title=="提现公告"){
+					return "2020-07-10 00:00:00"
+				}
+				if(title=="支付宝二维码异常"){
+					return "2020-07-15 23:00:00" 
+				}
+				if(title=="近期充值重复提交"){
+					return "2020-07-18 00:00:00"
+				}
+				if (title == "关于未及时处理相关"){
+					return "2020-07-01 00:00:00"
+				}
+					return this.renderTime(date);
+				},
+				renderTime(date) {
+						var dateee = new Date(date).toJSON();
+						return new Date(+new Date(dateee) + 8 * 3600 * 1000)
+							.toISOString()
+							.replace(/T/g, " ")
+							.replace(/\.[\d]{3}Z/, "");
 					},
-					header:{'Authorization': 'Bearer '+uni.getStorageSync('token')},
-					success:(res)=>{
-						console.log(res,'用户信息')
-						if(res.data.code===401){
-							uni.showToast({
-								title:'登录已超时，请重新登录',
-								icon:'none',
-								success:(res)=>{
-									setTimeout(()=>{
-										uni.redirectTo({
-											url: '../login/login1'
-										})
-									},1500)
+					getAllAnnounce() {
+						uni.request({
+							url: 'http://139.155.25.239:3001/announce/getAllAnnounce',
+							method: "GET",
+							header: {
+								'Authorization': 'Bearer ' + uni.getStorageSync('token')
+							},
+							success: res => {
+								if (res.data.code == 0) {
+									this.announcement = [];
+									res.data.data.reverse()
+									for (var i = 0; i < res.data.data.length; i++) {
+										if (res.data.data[i].type == "notice" && this.announcement.length < 6) {
+											this.announcement.push(res.data.data[i])
+										}
+									}
 								}
-							})
-						};
-						if(res.data.code===0){
-							this.userData=res.data.data
-						}
+							}
+						})
+					},
+					getUserData() {
+						uni.request({
+							url: 'http://139.155.25.239:3001/user/getUserInfo',
+							method: 'POST',
+							data: {
+								id: uni.getStorageSync('id'),
+							},
+							header: {
+								'Authorization': 'Bearer ' + uni.getStorageSync('token')
+							},
+							success: (res) => {
+								console.log(res, '用户信息')
+								if (res.data.code === 401) {
+									uni.showToast({
+										title: '登录已超时，请重新登录',
+										icon: 'none',
+										success: (res) => {
+											setTimeout(() => {
+												uni.redirectTo({
+													url: '../login/login1'
+												})
+											}, 1500)
+										}
+									})
+								};
+								if (res.data.code === 0) {
+									this.userData = res.data.data
+								}
+							}
+						})
+					},
+					goNoticeData() {
+						// 暂无
+					},
+					goNoticecotent(id) {
+						console.log(id)
+						uni.navigateTo({
+							url: '../notice/noticecontent?id=' + id,
+						})
+					},
+					goProblem() {
+						uni.navigateTo({
+							url: '../problem/problem',
+						})
+					},
+					goNotice() {
+						uni.navigateTo({
+							url: '../notice/notice?',
+						})
+					},
+					goRecharge() {
+						uni.navigateTo({
+							url: '../recharge/recharge'
+						})
 					}
-				})
-			},
-			goNoticeData(){
-				// 暂无
-			},
-			goNoticecotent(id){
-				console.log(id)
-				uni.navigateTo({
-					url:'../notice/noticecontent?id='+id,
-				})
-			},
-			goProblem(){
-				uni.navigateTo({
-					url:'../problem/problem',
-				})
-			},
-			goNotice(){
-				uni.navigateTo({
-					url:'../notice/notice?',
-				})
-			},
-			goRecharge(){
-				uni.navigateTo({
-					url:'../recharge/recharge'
-				})
 			}
 		}
-	}
 </script>
 
 <style lang="scss" scoped>
@@ -164,16 +203,18 @@
 				font-size: 55upx;
 			}
 		}
-		.recharge{
-			flex:1;
+
+		.recharge {
+			flex: 1;
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			view{
-				padding:10upx 30upx;
+
+			view {
+				padding: 10upx 30upx;
 				border-radius: 30upx;
 				background-color: #000000;
-				color:#FFFFFF;
+				color: #FFFFFF;
 			}
 		}
 
@@ -222,31 +263,36 @@
 			height: 60upx;
 		}
 	}
-	.announcement{
-		width:95%;
-		margin:20upx auto;
-		.announcement_title{
+
+	.announcement {
+		width: 95%;
+		margin: 20upx auto;
+
+		.announcement_title {
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
-			padding:20upx;
+			padding: 20upx;
 			font-size: 20upx;
-			color:#808080;
+			color: #808080;
 			border: 1upx solid #F1F1F1;
-			.b{
-				color:#A4B1E3;
+
+			.b {
+				color: #A4B1E3;
 				font-size: 35upx;
 			}
 		}
-		.announcement_content{
-			border-left:1upx solid #F1F1F1;
-			border-right:1upx solid #F1F1F1;
-			border-bottom:1upx solid #F1F1F1;
+
+		.announcement_content {
+			border-left: 1upx solid #F1F1F1;
+			border-right: 1upx solid #F1F1F1;
+			border-bottom: 1upx solid #F1F1F1;
 			font-size: 32upx;
-			padding:20upx;
-			color:#808080;
-			.title{
-				color:#0C4DAF;
+			padding: 20upx;
+			color: #808080;
+
+			.title {
+				color: #0C4DAF;
 				font-weight: 500;
 			}
 		}
