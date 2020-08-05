@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "5334147",
+      "name": "分红情况",
+      "font_class": "fenhongqingkuang",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "3654566",
+      "name": "提现",
+      "font_class": "tixian",
+      "unicode": "e678",
+      "unicode_decimal": 59000
+    },
+    {
       "icon_id": "1079500",
       "name": "收款",
       "font_class": "shoukuan",

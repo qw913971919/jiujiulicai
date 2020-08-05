@@ -15,7 +15,8 @@
 			<view class="box">
 				<view class="getmoney">
 					<view style="font-size: 34upx;flex-shrink: 0;">
-						<text>获利模式</text><switch :checked="flag" @click="getMoney()" style="width: 60upx;"></switch>
+						<text>获利模式</text>
+						<switch :checked="flag" @click="getMoney()" :disabled="userdata.userForbiden" style="width: 60upx;"></switch>
 					</view>
 					<view style="font-size: 33upx;position: relative;">红利：{{userdata.profitMoney}}</view>
 					<view class="recharge" @tap="goprofitMoney">红利转移</view>
@@ -29,7 +30,8 @@
 				<view>金额:{{item.money}}</view>
 				<text>订单信息</text>
 			</view>
-			<view class="text">(支付宝)</view>
+			<view class="text" style="display: flex;justify-content: space-between;"><text>时间:{{renderTime(item.createdate)}}</text><text>(支付宝)</text></view>
+
 			<button @tap="confirm(item.money,item._id)">进行获利</button>
 		</view>
 	</view>
@@ -40,74 +42,99 @@
 		data() {
 			return {
 				title: 'Hello',
-				bb:false,
+				bb: false,
+				cc:false,
 				flag: false,
-				te:null,
+				te: null,
 				money: 0,
-				time:null,
+				time: null,
 				userdata: {
 					username: '会员',
 					bond: 0, //保证金
 					orderlist: []
 				},
-				switchmode:[]
+				switchmode: [],
+				switchmode1:[]
 			}
 		},
-		onLoad() {
+		async onLoad() {
 			// 进页面获取数据
-			this.getUserData()
-
 		},
-		onHide(){
+		onHide() {
 			// 隐藏时
 
 		},
 		onShow() {
 			uni.switchTab({
-				url:'./user/user'
+				url: './user/user'
 			})
+			clearInterval(this.te)
 			this.getUserData()
-			console.log(uni.getStorageSync('flag'))
-			if(uni.getStorageSync('flag')==true){
-				this.flag=true;
-				setTimeout(()=>{
+			if (this.userdata.userForbiden == true) {
+				getMoney()
+				uni.showToast({
+					title: '用户已被禁止开启获利模式，暂不会有新的订单派送',
+					icon: 'none',
+				})
+			}
+			console.log(uni.getStorageSync('flag'),'切换后的flag')
+			if (uni.getStorageSync('flag') == true) {
+				this.flag = true;
+				setTimeout(() => {
 					this.swichMoney(this.flag)
-				},200)
+				}, 200)
 			}
 		},
 		onPullDownRefresh() {
 			// 刷新获取数据在这里获取，这里是页面刷新动画启用时的生命周期，如果想要刷新数据，在这里调用
 			this.flag = uni.getStorageSync('flag');
-			this.money=0;
+			this.money = 0;
 			setTimeout(() => {
 				uni.stopPullDownRefresh()
+				if (this.userdata.userForbiden == true) {
+					uni.setStorageSync('flag', false)
+				}
 				clearInterval(this.te)
 				this.swichMoney(uni.getStorageSync('flag'))
 				//重新发起获取数据请求，写在这里
 			}, 1000)
 		},
 		methods: {
-			goprofitMoney(){
+			renderTime(date) {
+				var dateee = new Date(date).toJSON();
+				return new Date(+new Date(dateee) + 8 * 3600 * 1000)
+					.toISOString()
+					.replace(/T/g, " ")
+					.replace(/\.[\d]{3}Z/, "");
+			},
+			goprofitMoney() {
 				uni.navigateTo({
-					url:'../profitMoney/profitMoney'
+					url: '../profitMoney/profitMoney'
 				})
 			},
 			//开关开启之后，开启一个定时器循环请求
 			getMoney() {
-				this.flag=!this.flag;
-				if (this.flag) {
-					console.log('开启时')
+				if (this.userdata.userForbiden == true) {
+					console.log('输出入了')
+					this.flag = false;
 					this.money = 0;
 					clearInterval(this.te)
+					this.swichMoney(this.flag)
+					return;
+				}
+				this.flag = !this.flag;
+				if (this.flag) {
+					console.log('开启时')
+					clearInterval(this.te)
 					this.swichMoney(this.flag);
-				} else {
+				} else{
 					this.money = 0;
 					clearInterval(this.te)
 					this.swichMoney(this.flag)
 				}
 			},
-			getUserData() {
-				uni.request({
+			async getUserData() {
+				await uni.request({
 					url: 'http://139.155.25.239:3001/user/getUserInfo',
 					method: 'POST',
 					data: {
@@ -134,6 +161,14 @@
 						if (res.data.code === 0) {
 							this.userdata = res.data.data
 							console.log(this.userdata, '获取到的数据')
+							if (this.userdata.userForbiden == true) {
+								console.log('bbbbbbbbbb')
+								uni.setStorageSync('flag', false)
+								uni.showToast({
+									title: '用户已被禁止开启获利模式，暂不会有新的订单派送',
+									icon: 'none',
+								})
+							}
 							uni.request({
 								url: 'http://139.155.25.239:3001/paypic/getUserPayPic',
 								method: 'POST',
@@ -143,107 +178,140 @@
 								header: {
 									'Authorization': 'Bearer ' + uni.getStorageSync('token')
 								},
-								success:(res)=>{
-									console.log(res.data.data,'支付宝数组')
-									this.switchmode=res.data.data
+								success: (res) => {
+									console.log(res.data.data, '支付宝数组')
+									this.switchmode = res.data.data.wpay
+									this.switchmode1 = res.data.data.apay
 								}
-								})
+							})
 						}
 					}
 				})
 			},
 			goRecharge() {
-				setTimeout(()=>{
+				setTimeout(() => {
 					uni.navigateTo({
 						url: '../recharge/recharge'
 					})
-				},200)
+				}, 200)
 
 			},
-			swichMoney(flag){
-					uni.setStorageSync('flag',flag)
-					console.log('是否执行',this.switchmode)
-					this.userdata.orderlist=[]
-					for(var i=0;i<this.switchmode.length;i++){
-						if(this.bb==true) break;
-						this.bb=this.switchmode[i].mode
-					}
-					console.log(this.switchmode,'是否有支付宝的数组')
-					if(this.bb==false){
-						uni.showToast({
-							title: '请先绑定支付宝二维码',
-							icon: 'none',
+			swichMoney(flag) {
+				console.log(flag,'flag的值')
+				uni.setStorageSync('flag', !flag)
+				console.log('是否执行', this.switchmode)
+				
+				for (var i = 0; i < this.switchmode.length; i++) {
+					if (this.bb == true) break;
+					this.bb = this.switchmode[i].mode
+				}
+				for (var i = 0; i < this.switchmode1.length; i++) {
+					if (this.cc == true) break;
+					this.cc = this.switchmode1[i].mode
+				}
+				console.log(this.switchmode, '是否有支付宝的数组')
+				if (this.bb == false&&this.cc==false) {
+					uni.showToast({
+						title: '请先绑定支付宝二维码',
+						icon: 'none',
+						success: (res) => {
+							setTimeout(() => {
+								uni.navigateTo({
+									url: '../more/zfbcollection'
+								})
+							}, 1500)
+						}
+					})
+				}
+				if (flag == true) {					
+					this.te = setInterval(() => {
+						console.log('1111')
+						uni.request({
+							url: 'http://139.155.25.239:3001/user/changeProfit',
+							method: 'POST',
+							data: {
+								id: uni.getStorageSync('id'),
+								profit: flag
+							},
+							header: {
+								'Authorization': 'Bearer ' + uni.getStorageSync('token')
+							},
 							success: (res) => {
-								setTimeout(() => {
-									uni.navigateTo({
-										url: '../more/zfbcollection'
+								if (res.data.code === 401) {
+									uni.showToast({
+										title: '登录已超时，请重新登录',
+										icon: 'none',
+										success: (res) => {
+											setTimeout(() => {
+												uni.redirectTo({
+													url: '../login/login1'
+												})
+											}, 1500)
+										}
 									})
-								}, 1500)
+								};
+								if (flag == false) return;
+								if (res.data.code === 0) {
+									uni.setStorageSync('flag',true)
+									console.log(res, '已开启获利模式')
+									if (flag) {
+										//成功开启获利模式后，开始获取管理员的派单
+										uni.request({
+											url: 'http://139.155.25.239:3001/profit/getProfit',
+											method: 'POST',
+											data: {
+												userId: uni.getStorageSync('id'),
+											},
+											header: {
+												'Authorization': 'Bearer ' + uni.getStorageSync('token')
+											},
+											success: (res) => {
+												if (res.data.code === 0) {
+													this.userdata.orderlist = res.data.data;
+													let mone = 0;
+													for (var i = 0; i < res.data.data.length; i++) {
+														console.log(res.data.data[i].money)
+														mone += Number(res.data.data[i].money)
+														this.money = mone
+													}
+													console.log(res.data.data, '获取到的订单数据')
+												}
+											},
+											fail: (err) => {
+												console.log(err)
+											}
+										})
+									}
+
+								}
 							}
 						})
-					}
-					clearInterval(this.te)
-					this.te=setInterval(()=>{
-					this.money=0;
-					console.log('1111')
+					}, 3000)
+				} else {
+					setTimeout(this.te)
 					uni.request({
 						url: 'http://139.155.25.239:3001/user/changeProfit',
 						method: 'POST',
 						data: {
 							id: uni.getStorageSync('id'),
-							profit: flag
+							profit: false
 						},
 						header: {
 							'Authorization': 'Bearer ' + uni.getStorageSync('token')
 						},
 						success: (res) => {
-							if (res.data.code === 401) {
+							this.userdata.orderlist = []
+							console.log(res, '关闭获利模式')
+							if (res.data.code == 0) {
+								uni.setStorageSync('flag',false)
 								uni.showToast({
-									title: '登录已超时，请重新登录',
-									icon: 'none',
-									success: (res) => {
-										setTimeout(() => {
-											uni.redirectTo({
-												url: '../login/login1'
-											})
-										}, 1500)
-									}
+									title: '已关闭获利模式',
+									icon: "none"
 								})
-							};
-							if(flag==false)return;
-							if (res.data.code === 0) {
-								console.log(res, '已开启获利模式')
-								if(flag){
-									//成功开启获利模式后，开始获取管理员的派单
-									uni.request({
-										url: 'http://139.155.25.239:3001/profit/getProfit',
-										method: 'POST',
-										data: {
-											userId: uni.getStorageSync('id'),
-										},
-										header: {
-											'Authorization': 'Bearer ' + uni.getStorageSync('token')
-										},
-										success: (res) => {
-											if (res.data.code === 0) {
-												this.userdata.orderlist = res.data.data;
-												for (var i = 0; i < res.data.data.length; i++) {
-													console.log(res.data.data[i].money)
-													this.money += Number(res.data.data[i].money)
-												}
-												console.log(res.data.data, '获取到的订单数据')
-											}
-										},
-										fail: (err) => {
-											console.log(err)
-										}
-									})
-								}
-					
 							}
 						}
 					})
-				},5000)
+				}
 			},
 			confirm(money, orderid) {
 				console.log(orderid)
@@ -271,8 +339,8 @@
 									if (res.data.code === 0) {
 										// 删除订单
 										uni.showToast({
-											title:res.data.data,
-											icon:'none'
+											title: res.data.data,
+											icon: 'none'
 										})
 										uni.request({
 											url: 'http://139.155.25.239:3001/profit/deleteProfit',
@@ -284,7 +352,7 @@
 												'Authorization': 'Bearer ' + uni.getStorageSync('token')
 											},
 											success: (res) => {
-												console.log(res,'删除订单')
+												console.log(res, '删除订单')
 												if (res.data.code === 0) {
 													console.log('删除订单成功')
 													// 重新获取订单数据

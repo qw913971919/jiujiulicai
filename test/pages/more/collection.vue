@@ -9,6 +9,15 @@
 				</view>
 				<view class="text">></view>
 			</view>
+			<view class="item_box" @tap="gowx()">
+				<image mode="aspectFit" src="../../static/image/wxcollection.jpg"></image>
+				<view class="item">
+					<text style="font-size: 38upx;color: #000000;font-weight: 550;margin-top: 20upx;">微信</text>
+					<text>状态:{{trueimages1.length?'已设置完成':'尚未设置'}}</text>
+					<text v-if='userdata.wpay.enable'>收款账户:{{userdata.wpay.enable.username}}</text>
+				</view>
+				<view class="text">></view>
+			</view>
 		</view>
 
 	</view>
@@ -19,7 +28,9 @@
 		data() {
 			return {
 				trueimages:[],
+				trueimages1:[],
 				falseimages:[],
+				falseimages1:[],
 				userdata: {
 					alipay: {
 						// enable: {
@@ -39,7 +50,8 @@
 						// 	today:0,//今日收款的金额
 						// 	id:2,//通过id发起请求，来确认是哪个账户被启用和停用
 						// }]
-					}
+					},
+					wpay:{},
 				},
 			};
 		},
@@ -143,7 +155,7 @@
 					success: (res) => {
 						console.log(res, '获取图片')
 						if (res.data.code === 0) {
-							this.userdata.alipay=res.data.data
+							this.userdata.alipay=res.data.data.apay
 							this.images=true;
 							for(var i=0;i<this.userdata.alipay.length;i++){
 								if(this.userdata.alipay[i].mode===true){
@@ -151,6 +163,16 @@
 								}
 								if(this.userdata.alipay[i].mode===false){
 									this.falseimages.push(this.userdata.alipay[i])
+								}
+							}
+							this.userdata.wpay=res.data.data.wpay
+							this.images1=true;
+							for(var i=0;i<this.userdata.wpay.length;i++){
+								if(this.userdata.wpay[i].mode===true){
+									this.trueimages1.push(this.userdata.wpay[i])
+								}
+								if(this.userdata.wpay[i].mode===false){
+									this.falseimages1.push(this.userdata.wpay[i])
 								}
 							}
 						}

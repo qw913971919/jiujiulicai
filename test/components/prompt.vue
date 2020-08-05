@@ -3,8 +3,7 @@
 	<view>
 		<view v-show="show" class="uni-mask" :style="{ top: offsetTop + 'px' }" @touchmove.stop.prevent="maskMoveHandle"></view>
 		<view v-show="show" class="prompt-content contentFontColor" :class="'uni-prompt-' + position + ' ' + 'uni-prompt-' + mode">
-			<view class="prompt-title">请输入支付宝账号和姓名</view>
-			<input class="prompt-input" type="text" placeholder="请输入账号" @input="_input" :value="cost" />
+			<view class="prompt-title">请输入姓名</view>
 			<input class="prompt-input" type="text" placeholder="请输入姓名" @input="_nput" :value="name" />
 			<view class="prompt-btn-group">
 				<text class="btn-item prompt-cancel-btn contentFontColor" @tap="_cancel">{{btn_cancel}}</text>
@@ -23,7 +22,7 @@
 			return {
 				offsetTop: 0,
 				multipleSlots: true, // 在组件定义时的选项中启用多slot支持
-				cost: '',
+				cost: '无',
 				name:'',
 			};
 		},

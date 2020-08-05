@@ -11,7 +11,6 @@
 					<view class="text">
 						<text style="font-size: 38upx;color: #000000;font-weight: 550;margin-top: 20upx;">支付宝</text>
 						<text>状态:{{item.mode?'使用中':'未启用'}}</text>
-						<text>收款账户:{{item.username}}</text>
 						<text>收款人:{{item.name}}</text>
 					</view>
 					<view>
@@ -27,7 +26,6 @@
 					<view class="text">
 						<text style="font-size: 38upx;color: #000000;font-weight: 550;margin-top: 20upx;">支付宝</text>
 						<text>状态:{{item.mode?'使用中':'未启用'}}</text>
-						<text>收款账户:{{item.username}}</text>
 						<text>收款人:{{item.name}}</text>
 					</view>
 					<view>
@@ -105,7 +103,8 @@
 							filePath: tempFilePaths[0],
 							name: 'images',
 							header: {
-								token: uni.getStorageSync('token')
+								token: uni.getStorageSync('token'),
+								
 							},
 							success: (uploadFileRes) => {
 								console.log(uploadFileRes)
@@ -204,6 +203,7 @@
 						picUrl: url,
 						name: b,
 						username: a,
+						picType:'apay'
 					},
 					header: {
 						'Authorization': 'Bearer ' + uni.getStorageSync('token')
@@ -223,9 +223,16 @@
 								}
 							})
 						};
-						if (res.data.code === 0) {
-							console.log(res.data.data,'设置图片成功后看看返回值')
-							this.getimageslist()
+						if (res.data.code == 0) {
+							uni.showToast({
+								title: '设置成功',
+								icon: 'none'
+							})
+							setTimeout(() => {
+								uni.switchTab({
+									url: '../user/user'
+								})
+							}, 1500)
 						}
 
 					},
@@ -245,9 +252,9 @@
 						'Authorization': 'Bearer ' + uni.getStorageSync('token')
 					},
 					success: (res) => {
-						console.log(res, '获取图片')
+						console.log(res, '获取图片1111')
 						if (res.data.code === 0) {
-							this.userdata.alipay = res.data.data
+							this.userdata.alipay = res.data.data.apay
 							this.images = true;
 							this.trueimages=[];
 							this.falseimages=[];

@@ -133,7 +133,7 @@ console.log(a)
 				})
 				// 以上应该写发起订单，一下是跳转回首页
 				uni.showToast({
-					title:'提交订单成功',
+					title:'设置成功',
 					success:function(){
 						setTimeout(()=>{
 							uni.switchTab({

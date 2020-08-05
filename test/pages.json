@@ -1,8 +1,8 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path" : "pages/login/login",
-			"style" : {
+			"path": "pages/login/login",
+			"style": {
 				"navigationStyle": "custom"
 			}
 		},
@@ -34,27 +34,27 @@
 			}
 		},
 		{
-			"path":"pages/more/information",
-			"style":{
-				"navigationBarTitleText":"账号安全"
+			"path": "pages/more/information",
+			"style": {
+				"navigationBarTitleText": "账号安全"
 			}
 		},
 		{
-			"path":"pages/more/collection",
-			"style":{
-				"navigationBarTitleText":"收款账户"
+			"path": "pages/more/collection",
+			"style": {
+				"navigationBarTitleText": "收款账户"
 			}
 		},
 		{
-			"path":"pages/more/withdrawal",
-			"style":{
-				"navigationBarTitleText":"提现账号"
+			"path": "pages/more/withdrawal",
+			"style": {
+				"navigationBarTitleText": "提现账号"
 			}
 		},
 		{
-			"path":"pages/more/form",
-			"style":{
-				"navigationBarTitleText":"盈利报表"
+			"path": "pages/more/form",
+			"style": {
+				"navigationBarTitleText": "盈利报表"
 			}
 		},
 		{
@@ -68,7 +68,7 @@
 			"style": {
 				"navigationBarTitleText": "系统公告"
 			}
-		}, 
+		},
 		{
 			"path": "pages/problem/problem",
 			"style": {
@@ -82,49 +82,60 @@
 			}
 		},
 		{
-			"path":"pages/recharge/recharge",
-			"style":{
-				"navigationBarTitleText":"在线充值"
+			"path": "pages/recharge/recharge",
+			"style": {
+				"navigationBarTitleText": "在线充值"
 			}
 		},
 		{
-			"path":"pages/order/order",
-			"style":{
-				"navigationBarTitleText":"提交订单"
+			"path": "pages/order/order",
+			"style": {
+				"navigationBarTitleText": "提交订单"
+			}
+		}, {
+			"path": "pages/more/get",
+			"style": {
+				"navigationBarTitleText": "修改个人信息"
+			}
+		}, {
+			"path": "pages/more/zfbcollection",
+			"style": {
+				"navigationBarTitleText": "我的支付宝账户"
+			}
+		}, {
+			"path": "pages/more/wxcollection",
+			"style": {
+				"navigationBarTitleText": "我的微信账户"
+			}
+		}, {
+			"path": "pages/more/bankcard",
+			"style": {
+				"navigationBarTitleText": "添加提现银行卡"
 			}
 		}
-        ,{
-            "path" : "pages/more/get",
-            "style":{
-            	"navigationBarTitleText":"修改个人信息"
-            }
-        }
-        ,{
-            "path" : "pages/more/zfbcollection",
-            "style" : {
-				"navigationBarTitleText":"我的支付宝账户"
+
+		, {
+			"path": "pages/login/login1",
+			"style": {
+				"navigationBarTitleText": "登录"
 			}
-        }
-        ,{
-            "path" : "pages/more/bankcard",
-            "style" : {
-				"navigationBarTitleText":"添加提现银行卡"
+		}, {
+			"path": "pages/profitMoney/profitMoney",
+			"style": {
+				"navigationBarTitleText": "红利转移"
 			}
-        }
-        
-        ,{
-            "path" : "pages/login/login1",
-            "style" : {
-				"navigationBarTitleText":"登录"
+		}, {
+			"path": "pages/more/deposit",
+			"style": {
+				"navigationBarTitleText": "提现相关"
 			}
-        }
-        ,{
-            "path" : "pages/profitMoney/profitMoney",
-            "style" : {
-				"navigationBarTitleText":"红利转移"
+		}, {
+			"path": "pages/more/bonus",
+			"style": {
+				"navigationBarTitleText": "分润详情"
 			}
-        }
-    ],
+		}
+	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",

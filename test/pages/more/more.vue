@@ -24,6 +24,10 @@
 				<text class="iconfont icon-shoukuanzhanghao"></text>
 				<view>提现账号</view>
 			</view>
+			<view class="menu_item" @tap="godeposit()">
+				<text class="iconfont icon-tixian"></text>
+				<view>提现相关</view>
+			</view>
 			<view class="menu_item" @tap="gorecharge()">
 				<text class="iconfont icon-chongzhi"></text>
 				<view>我要充值</view>
@@ -31,6 +35,10 @@
 			<view class="menu_item" @tap="goform()">
 				<text class="iconfont icon-tubiao"></text>
 				<view>盈利报表</view>
+			</view>
+			<view class="menu_item" @tap="gobonus()">
+				<text class="iconfont icon-fenhongqingkuang"></text>
+				<view>分润详细</view>
 			</view>
 			<view class="menu_item">
 				<button class="button" hover-class="hover" @tap="gologin()">登出</button>
@@ -55,6 +63,11 @@
 			this.getUserData();
 		},
 		methods: {
+			godeposit(){
+				uni.navigateTo({
+					url: "../more/deposit"
+				})
+			},
 			getUserData(){
 				uni.request({
 					url:'http://139.155.25.239:3001/user/getUserInfo',
@@ -117,6 +130,11 @@
 					// 需要先清除token
 					url: '../login/login'
 				})
+			},
+			gobonus(){
+				uni.navigateTo({
+					url: '../more/bonus'
+				})
 			}
 		}
 	}
@@ -124,6 +142,7 @@
 
 <style lang="scss" scoped>
 	.content {
+		padding-bottom: 100upx;
 		.button {
 			width: 100%;
 			height: 100%;
