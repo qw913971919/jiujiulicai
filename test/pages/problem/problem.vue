@@ -68,13 +68,14 @@
 		align-items: center;
 		border-bottom: 1upx solid #C4C4C4;
 		image{
-			width:100upx;
-			height:100upx;
+			width:70upx;
+			height:70upx;
 			flex-shrink:0;//图片不会被自动缩小，找了好久
 			margin:10upx;
 		}
 		text{
 			padding:10upx;
+			font-size: 30upx;
 		}
 	}
 </style>

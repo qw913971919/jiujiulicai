@@ -15,7 +15,7 @@
 					</view>
 					<view>
 						<image src="../../static/image/edit.png" mode="aspectFit" @click="changePayPicMode(item._id,item.mode)"></image>
-						<image src="../../static/image/delete.png" mode="aspectFit" @click="deletePayPic(item._id)"></image>
+						<image src="../../static/image/delete.png" mode="aspectFit" @click="deletePayPic(item._id,item.author)"></image>
 					</view>
 				</view>
 			</view>
@@ -30,7 +30,7 @@
 					</view>
 					<view>
 						<image src="../../static/image/edit.png" mode="aspectFit" @click="changePayPicMode(item._id,item.mode)"></image>
-						<image src="../../static/image/delete.png" mode="aspectFit" @click="deletePayPic(item._id)"></image>
+						<image src="../../static/image/delete.png" mode="aspectFit" @click="deletePayPic(item._id,item.author)"></image>
 					</view>
 				</view>
 			</view>
@@ -49,6 +49,7 @@
 				trueimages: [],
 				falseimages: [],
 				promptType: '',
+				promptText: '请输入账号名',
 				name: '请输入微信真实姓名',
 				userdata: {
 					alipay: {
@@ -132,7 +133,8 @@
 					data: {
 						authorId: uni.getStorageSync('id'),
 						id: id,
-						mode: !mode
+						mode: !mode,
+						picType:'wpay'
 					},
 					header: {
 						'Authorization': 'Bearer ' + uni.getStorageSync('token')
@@ -146,9 +148,7 @@
 								icon: 'none',
 								success: (res) => {
 									setTimeout(() => {
-										uni.navigateTo({
-											url: './wxcollection'
-										})
+										this.getimageslist()
 										// 刷新页面
 									}, 1500)
 								}
@@ -157,13 +157,14 @@
 					},
 				})
 			},
-			deletePayPic(id) {
+			deletePayPic(id,a) {
 				console.log(this.trueimages)
 				uni.request({
 					url: 'http://139.155.25.239:3001/paypic/deletePayPic',
 					method: 'POST',
 					data: {
 						id: id,
+						authorId:a
 					},
 					header: {
 						'Authorization': 'Bearer ' + uni.getStorageSync('token')
@@ -177,9 +178,7 @@
 								icon: 'none',
 								success: (res) => {
 									setTimeout(() => {
-										uni.navigateTo({
-											url: './wxcollection'
-										})
+										this.getimageslist()
 										// 刷新页面
 									}, 1500)
 								}

@@ -10,23 +10,7 @@
 				<text>{{item.title}}</text>
 			</view>
 		</view>
-		<view style="position: relative;top:170upx;width:100%;text-align: center;font-size: 35upx;" @click="go()">请下载蝙蝠APP，www.batchat.com
-		<image src="../../static/image/bianfu.png" model="widthFix" style="width:250upx;height: 200upx;"></image>
-		</view>
-		<!-- #ifdef APP-PLUS -->
-		<view style="width:100%;background-color: #FFFFFF;display: flex;flex-direction: column;align-items: center;border-top-left-radius: 60%;border-top-right-radius: 60%;position: fixed;bottom: 0px;
-	border: 1upx solid rgba(0, 0, 0, .2);right: 0;color:#808080;padding:20upx 0upx 10upx;font-size: 30upx;">
 
-			<!-- #endif -->
-			<!-- #ifdef H5 -->
-			<view style="width:100%;background-color: #FFFFFF;display: flex;flex-direction: column;align-items: center;border-top-left-radius: 60%;border-top-right-radius: 60%;position: fixed;bottom: 49px;
-		border: 1upx solid rgba(0, 0, 0, .2);right: 0;color:#808080;padding:20upx 0upx 10upx;font-size: 30upx;">
-				<!-- #endif -->
-				<text>专线客服：2322799</text>
-				<text>专线客服：2521857</text>
-				<text style="margin-bottom:20upx;">提现客服：2772876</text>
-			</view>
-		</view>
 	</view>
 	</view>
 </template>
@@ -123,14 +107,15 @@
 				border-bottom: 1upx solid #C4C4C4;
 
 				image {
-					width: 100upx;
-					height: 100upx;
+					width: 70upx;
+					height: 70upx;
 					flex-shrink: 0; //图片不会被自动缩小，找了好久
 					margin: 10upx;
 				}
 
 				text {
 					padding: 10upx;
+					font-size: 30upx;
 				}
 			}
 		}

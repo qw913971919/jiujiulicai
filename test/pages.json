@@ -1,15 +1,15 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path": "pages/login/login",
+			"path": "pages/login/login1",
 			"style": {
-				"navigationStyle": "custom"
+				"navigationBarTitleText": "登录"
 			}
 		},
 		{
 			"path": "pages/home/home",
 			"style": {
-				"navigationBarTitleText": "久富"
+				"navigationBarTitleText": "名字"
 			}
 		},
 		{
@@ -22,14 +22,14 @@
 		{
 			"path": "pages/service/service",
 			"style": {
-				"navigationBarTitleText": "客服"
+				"navigationBarTitleText": "帮助"
 			}
 		},
 		{
 			"path": "pages/user/user",
 			"style": {
 				"navigationBarTitleText": "我的",
-				"enablePullDownRefresh": true,
+				// "enablePullDownRefresh": true,
 				"backgroundTextStyle": "dark"
 			}
 		},
@@ -135,11 +135,22 @@
 				"navigationBarTitleText": "分润详情"
 			}
 		}
-	],
+	    ,{
+            "path" : "pages/more/agreement",
+            "style" : {
+				"navigationBarTitleText": "用户协议"
+			}
+        },{
+            "path" : "pages/more/indeposit",
+            "style" : {
+				"navigationBarTitleText": "初始金提现"
+			}
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#566DCC",
+		"navigationBarBackgroundColor": "#A4B1E3",
 		"backgroundColor": "#F8F8F8"
 	},
 	"tabBar": {
@@ -166,7 +177,7 @@
 				"pagePath": "pages/service/service",
 				"iconPath": "static/image/service.png",
 				"selectedIconPath": "static/image/service.png",
-				"text": "客服"
+				"text": "帮助"
 			}, {
 				"pagePath": "pages/more/more",
 				"iconPath": "static/image/more.png",

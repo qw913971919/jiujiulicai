@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "6049692",
+      "name": "图片",
+      "font_class": "tupian",
+      "unicode": "e61e",
+      "unicode_decimal": 58910
+    },
+    {
+      "icon_id": "99084",
+      "name": "金钱图标",
+      "font_class": "weibiaoti1",
+      "unicode": "e62e",
+      "unicode_decimal": 58926
+    },
+    {
       "icon_id": "5334147",
       "name": "分红情况",
       "font_class": "fenhongqingkuang",

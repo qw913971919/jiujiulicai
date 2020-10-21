@@ -1,10 +1,10 @@
 <template>
 	<view class="content">
 		<view>金额：<input v-model="form.money" disabled="true" style="background-color: #d4dadb;" /></view>
-		<view>卡号：<input v-model="form.card" disabled="true" style="background-color: #d4dadb;"/></view>
+		<view>充值卡号：<input v-model="form.card" disabled="true" style="background-color: #d4dadb;"/></view>
 		<view>所属银行:<input v-model="form.bank" disabled="true" style="background-color: #d4dadb;"/></view>
 		<view>姓名:<input v-model="form.name" disabled="true" style="background-color: #d4dadb;"/></view>
-		<view>打款备注:<input v-model="form.remarks" disabled="true" style="background-color: #d4dadb;"/></view>
+		<view>请在打款时备注该验证码:<input v-model="form.remarks" disabled="true" style="background-color: #d4dadb;"/></view>
 		<button @tap="submit" style="width:65%;margin-top:50upx;">提交订单</button>
 	</view>
 </template>

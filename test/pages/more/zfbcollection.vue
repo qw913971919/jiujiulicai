@@ -15,7 +15,7 @@
 					</view>
 					<view>
 						<image src="../../static/image/edit.png" mode="aspectFit" @click="changePayPicMode(item._id,item.mode)"></image>
-						<image src="../../static/image/delete.png" mode="aspectFit" @click="deletePayPic(item._id)"></image>
+						<image src="../../static/image/delete.png" mode="aspectFit" @click="deletePayPic(item._id,item.author)"></image>
 					</view>
 				</view>
 			</view>
@@ -30,7 +30,7 @@
 					</view>
 					<view>
 						<image src="../../static/image/edit.png" mode="aspectFit" @click="changePayPicMode(item._id,item.mode)"></image>
-						<image src="../../static/image/delete.png" mode="aspectFit" @click="deletePayPic(item._id)"></image>
+						<image src="../../static/image/delete.png" mode="aspectFit" @click="deletePayPic(item._id,item.author)"></image>
 					</view>
 				</view>
 			</view>
@@ -133,7 +133,8 @@
 					data: {
 						authorId: uni.getStorageSync('id'),
 						id: id,
-						mode: !mode
+						mode: !mode,
+						picType:'apay'
 					},
 					header: {
 						'Authorization': 'Bearer ' + uni.getStorageSync('token')
@@ -147,9 +148,7 @@
 								icon: 'none',
 								success: (res) => {
 									setTimeout(() => {
-										uni.navigateTo({
-											url: './zfbcollection'
-										})
+										this.getimageslist()
 										// 刷新页面
 									}, 1500)
 								}
@@ -158,13 +157,15 @@
 					},
 				})
 			},
-			deletePayPic(id) {
+			deletePayPic(id,b) {
 				console.log(this.trueimages)
+				console.log(b)
 				uni.request({
 					url: 'http://139.155.25.239:3001/paypic/deletePayPic',
 					method: 'POST',
 					data: {
 						id: id,
+						authorId:b
 					},
 					header: {
 						'Authorization': 'Bearer ' + uni.getStorageSync('token')
@@ -178,9 +179,7 @@
 								icon: 'none',
 								success: (res) => {
 									setTimeout(() => {
-										uni.navigateTo({
-											url: './zfbcollection'
-										})
+										this.getimageslist()
 										// 刷新页面
 									}, 1500)
 								}

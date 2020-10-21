@@ -12,7 +12,7 @@
 				<view>提现金额:{{item.money}}</view>
 				<text v-if="item.status=='pending'" style="color:#FFD04B;">未审核</text>
 				<text v-if="item.status=='success'" style="color:#409EFF;">已提现</text>
-				<text v-if="item.status=='failed'" style="color:red;">已拒绝</text>
+				<text v-if="item.status=='failed'" style="color:red;">系统忙，请稍后再试</text>
 			</view>
 			<view class="text" style="display: flex;justify-content: space-between;"><text>时间:{{renderTime(item.createTime)}}</text></view>
 		</view>
